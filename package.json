@@ -9,17 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@pinecone-database/pinecone": "^0.1.6",
     "ai": "2.1.2",
-    "next": "13.4.4-canary.11",
+    "d3-dsv": "2",
     "langchain": "^0.0.86",
+    "next": "13.4.4-canary.11",
     "react": "18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.12",
-    "autoprefixer": "^10.4.14",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
+    "autoprefixer": "^10.4.14",
     "eslint": "^7.32.0",
     "eslint-config-next": "13.4.4-canary.11",
     "postcss": "^8.4.23",
