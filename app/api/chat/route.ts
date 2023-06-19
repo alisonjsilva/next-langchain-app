@@ -63,5 +63,5 @@ export async function POST(req: Request) {
   //   )
   //   .catch(console.error)
 
-  return new StreamingTextResponse(stream)
+  return new StreamingTextResponse(chainResult)
 }
