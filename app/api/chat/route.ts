@@ -49,7 +49,7 @@ export async function POST(req: Request) {
   console.log(query);
 
   const nonStreamingModel = new ChatOpenAI({});
-  const chain = VectorDBQAChain.fromLLM(llmStreamModel, vectorStore, nonStreamingModel);
+  const chain = VectorDBQAChain.fromLLM(llmStreamModel, vectorStore);
   const chainResult = await chain.call({ query: query });
 
 
@@ -63,5 +63,5 @@ export async function POST(req: Request) {
   //   )
   //   .catch(console.error)
 
-  return new StreamingTextResponse(chainResult)
+  return new StreamingTextResponse(stream)
 }
