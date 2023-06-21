@@ -1,4 +1,4 @@
-import { StreamingTextResponse, LangChainStream, Message } from 'ai'
+import { StreamingTextResponse, LangChainStream, Message, OpenAIStream } from 'ai'
 import { CallbackManager } from 'langchain/callbacks'
 import { ChatOpenAI } from 'langchain/chat_models/openai'
 import { AIChatMessage, HumanChatMessage } from 'langchain/schema'
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   const nonStreamingModel = new ChatOpenAI({});
   const chain = VectorDBQAChain.fromLLM(llmStreamModel, vectorStore);
   const chainResult = await chain.call({ query: query });
-
+  const stream = OpenAIStream(chainResult)
 
   // llmStreamModel
   //   .call(
