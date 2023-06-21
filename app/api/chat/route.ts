@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   const nonStreamingModel = new ChatOpenAI({});
   const chain = VectorDBQAChain.fromLLM(llmStreamModel, vectorStore);
   const chainResult = await chain.call({ query: query });
-  const stream = OpenAIStream(chainResult)
+  stream = OpenAIStream(chainResult)
 
   // llmStreamModel
   //   .call(
