@@ -7,6 +7,7 @@ import { HNSWLib } from 'langchain/vectorstores';
 import { PineconeStore } from "langchain/vectorstores/pinecone";
 import { PineconeClient, ScoredVector } from "@pinecone-database/pinecone";
 import { VectorDBQAChain } from "langchain/chains";
+import { PromptTemplate } from "langchain/prompts";
 
 export const runtime = 'edge'
 
@@ -35,23 +36,22 @@ export async function POST(req: Request) {
   let streamedResponse = "";
   const { stream, handlers } = LangChainStream()
 
-  const llmStreamModel = new ChatOpenAI({
+  const openai = new ChatOpenAI({
     streaming: true,
     callbackManager: CallbackManager.fromHandlers(handlers),
+    modelName: "gpt-3.5-turbo",
   })
-
 
   const query = (messages as Message[]).map(m =>
     m.role == 'user'
       ? m.content
       : ""
   )?.at(-1);
-  console.log(query);
 
-  const nonStreamingModel = new ChatOpenAI({});
-  const chain = VectorDBQAChain.fromLLM(llmStreamModel, vectorStore);
-  const chainResult = await chain.call({ query: query });
-  stream = OpenAIStream(chainResult)
+  const chain = VectorDBQAChain.fromLLM(openai, vectorStore);
+  // const chainResult = await chain.call({ query: query });
+
+  chain.run(query)
 
   // llmStreamModel
   //   .call(
